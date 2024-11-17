@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Container, Typography, Box, Card, CardContent, CardMedia, Button } from "@mui/material";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart"; // Import the shopping cart icon
 
 const Shop = () => {
   const containerRef = useRef(null);
@@ -63,7 +64,8 @@ const Shop = () => {
       id="shop"
       sx={{
         py: 4,
-        maxWidth: "90%", // Make container wider (90% of the screen width)
+        maxWidth: "100%", // Make container span the full width of the screen
+        margin: "0 auto", // Center the container
       }}
     >
       <Typography variant="h4" gutterBottom>
@@ -95,7 +97,7 @@ const Shop = () => {
           <Box
             key={product.id}
             sx={{
-              flex: "0 0 calc(25% - 1rem)", // Adjust width to fit more items (4 items per row)
+              flex: "0 0 calc(25% - 1rem)", // Adjust to fit 4 items per row (25% each)
               maxWidth: "calc(25% - 1rem)", // 25% width for each item (4 items per row)
             }}
             onMouseEnter={() => setHoveredProduct(product.id)} // Show details on hover
@@ -105,7 +107,7 @@ const Shop = () => {
             <Card sx={{ textAlign: "center", position: "relative" }}>
               <CardMedia
                 component="img"
-                height="250"
+                height="400" // Increased height for larger image
                 image={product.image}
                 alt={product.title}
                 sx={{
@@ -138,8 +140,20 @@ const Shop = () => {
                   <Typography variant="body2" color="text.secondary" mb={2}>
                     Price: {product.price}
                   </Typography>
-                  <Button size="small" color="primary" variant="contained">
-                    Buy Now
+                  <Button
+                    size="small"
+                    variant="contained" // Change variant to 'contained' for a solid background
+                    startIcon={<AddShoppingCartIcon />} // Add shopping cart icon
+                    sx={{
+                      backgroundColor: "white", // White background
+                      color: "black", // Black text color
+                      borderColor: "black", // Black border
+                      "&:hover": {
+                        backgroundColor: "rgba(0, 0, 0, 0.1)", // Light hover effect
+                      },
+                    }}
+                  >
+                    Dodaj do koszyka
                   </Button>
                 </CardContent>
               )}
