@@ -1,70 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Container, Typography, Box, Button } from "@mui/material";
 
 const FAQ = () => {
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [selectedQuestion, setSelectedQuestion] = useState(1);
+  const [isVisible, setIsVisible] = useState(false); // State to track visibility of FAQ section
+  const faqRef = useRef(null); // Reference for the FAQ container
 
   const questions = [
-    {
-      id: 1,
-      question: "Jakie są godziny otwarcia?",
-      answer:
-        "Jestem otwarty od poniedziałku do piątku w godzinach 6:00 - 22:00, a w weekendy od 8:00 do 20:00.",
-    },
-    {
-      id: 2,
-      question: "Czy muszę mieć własny sprzęt?",
-      answer:
-        "Nie, nasz sprzęt jest dostępny do użytku dla wszystkich członków. Oferujemy różnorodne maszyny, hantle, oraz akcesoria fitness.",
-    },
-    {
-      id: 3,
-      question: "Czy oferujecie treningi personalne?",
-      answer:
-        "Tak, oferujemy usługi trenera personalnego. Nasz zespół wykwalifikowanych trenerów pomoże Ci osiągnąć Twoje cele fitness.",
-    },
-    {
-      id: 4,
-      question: "Czy mogę zapisać się na siłownię na próbny okres?",
-      answer:
-        "Tak, oferujemy 7-dniowy darmowy okres próbny, który pozwala Ci sprawdzić, czy nasze usługi odpowiadają Twoim potrzebom.",
-    },
-    {
-      id: 5,
-      question: "Jakie są ceny karnetów?",
-      answer:
-        "Mamy różne opcje karnetów: miesięczny, kwartalny oraz roczny. Ceny zaczynają się od 100 zł miesięcznie. Skontaktuj się z nami, aby uzyskać szczegółowe informacje.",
-    },
-    {
-      id: 6,
-      question: "Czy oferujecie zajęcia grupowe?",
-      answer:
-        "Tak, oferujemy szeroki wybór zajęć grupowych, takich jak yoga, pilates, spinning, czy treningi siłowe. Sprawdź nasz harmonogram na stronie.",
-    },
-    {
-      id: 7,
-      question: "Czy muszę rezerwować miejsce na zajęcia?",
-      answer:
-        "Rezerwacja miejsca na zajęcia grupowe jest zalecana, zwłaszcza w godzinach szczytu. Można to zrobić za pośrednictwem naszej aplikacji lub strony internetowej.",
-    },
+    { id: 1, question: "Jakie są godziny otwarcia?", answer: "Jestem otwarty od poniedziałku do piątku w godzinach 6:00 - 22:00, a w weekendy od 8:00 do 20:00." },
+    { id: 2, question: "Czy muszę mieć własny sprzęt?", answer: "Nie, nasz sprzęt jest dostępny do użytku dla wszystkich członków. Oferujemy różnorodne maszyny, hantle, oraz akcesoria fitness." },
+    { id: 3, question: "Czy oferujecie treningi personalne?", answer: "Tak, oferujemy usługi trenera personalnego. Nasz zespół wykwalifikowanych trenerów pomoże Ci osiągnąć Twoje cele fitness." },
+    { id: 4, question: "Czy mogę zapisać się na siłownię na próbny okres?", answer: "Tak, oferujemy 7-dniowy darmowy okres próbny, który pozwala Ci sprawdzić, czy nasze usługi odpowiadają Twoim potrzebom." },
+    { id: 5, question: "Jakie są ceny karnetów?", answer: "Mamy różne opcje karnetów: miesięczny, kwartalny oraz roczny. Ceny zaczynają się od 100 zł miesięcznie. Skontaktuj się z nami, aby uzyskać szczegółowe informacje." },
+    { id: 6, question: "Czy oferujecie zajęcia grupowe?", answer: "Tak, oferujemy szeroki wybór zajęć grupowych, takich jak yoga, pilates, spinning, czy treningi siłowe. Sprawdź nasz harmonogram na stronie." },
   ];
 
   const handleClick = (id) => {
     if (selectedQuestion === id) {
-      setSelectedQuestion(null); // If the same question is clicked again, hide the answer
+      setSelectedQuestion(null); // Toggle visibility of answer
     } else {
-      setSelectedQuestion(id); // Show the answer for the clicked question
+      setSelectedQuestion(id); // Show the selected question's answer
     }
   };
+
+  // IntersectionObserver to trigger fade-in effect
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true); // Set visibility to true when FAQ is in view
+          }
+        });
+      },
+      { threshold: 0.5 } // Trigger when 50% of the FAQ section is visible
+    );
+
+    if (faqRef.current) {
+      observer.observe(faqRef.current);
+    }
+
+    return () => {
+      if (faqRef.current) {
+        observer.unobserve(faqRef.current);
+      }
+    };
+  }, []);
 
   return (
     <Container
       id="faq"
+      ref={faqRef}
       sx={{
         py: 4,
         maxWidth: "100%",
         margin: "0 auto",
       }}
+      className={`fade-in ${isVisible ? 'visible' : ''}`} // Apply class for fade-in effect
     >
       <Typography variant="h4" gutterBottom sx={{ textAlign: "center" }}>
         FAQ
@@ -99,8 +91,8 @@ const FAQ = () => {
                 textAlign: "left",
                 borderRadius: "10px",
                 padding: "15px",
-                backgroundColor: selectedQuestion === question.id ? "#e0e0e0" : "#f0f0f0", // Highlight selected question
-                color: selectedQuestion === question.id ? "#000" : "#333", // Change text color on selection
+                backgroundColor: selectedQuestion === question.id ? "#e0e0e0" : "#f0f0f0",
+                color: selectedQuestion === question.id ? "#000" : "#333",
                 fontWeight: "bold",
                 fontSize: "18px",
                 width: "100%",
@@ -109,7 +101,7 @@ const FAQ = () => {
                 },
                 transition: "transform 0.5s ease-in-out",
                 transform:
-                  selectedQuestion === question.id ? "translateX(-100px)" : "none", // Move selected question to the left
+                  selectedQuestion === question.id ? "translateX(-100px)" : "none",
               }}
             >
               {question.question}
@@ -121,7 +113,7 @@ const FAQ = () => {
         <Box
           sx={{
             flex: 3,
-            padding: "30px", // Padding for answer block
+            padding: "30px",
             borderRadius: "10px",
             backgroundColor: "#f7f7f7",
             boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
@@ -141,7 +133,7 @@ const FAQ = () => {
               <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
                 Odpowiedź:
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "20px", fontWeight: "bold" }}>
+              <Typography variant="h6" sx={{ fontSize: "24px", fontWeight: "bold" }}>
                 {questions.find((q) => q.id === selectedQuestion).answer}
               </Typography>
             </>

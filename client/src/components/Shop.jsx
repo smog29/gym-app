@@ -75,7 +75,7 @@ const Shop = () => {
         ref={containerRef}
         sx={{
           display: "flex",
-          gap: 4,
+          gap: 2, // Reduced gap for more compact layout
           overflow: "hidden",
           scrollbarWidth: "none", // For Firefox
           msOverflowStyle: "none", // For IE/Edge
@@ -97,8 +97,8 @@ const Shop = () => {
           <Box
             key={product.id}
             sx={{
-              flex: "0 0 calc(25% - 1rem)", // Adjust to fit 4 items per row (25% each)
-              maxWidth: "calc(25% - 1rem)", // 25% width for each item (4 items per row)
+              flex: "0 0 calc(33.333% - 1rem)", // Adjust to take up 1/3 of the width (3 items per row)
+              maxWidth: "calc(33.333% - 1rem)", // Ensure each item takes up 1/3 of the width
             }}
             onMouseEnter={() => setHoveredProduct(product.id)} // Show details on hover
             onMouseLeave={() => setHoveredProduct(null)} // Hide details when mouse leaves
@@ -138,7 +138,7 @@ const Shop = () => {
                     {product.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" mb={2}>
-                    Price: {product.price}
+                    Cena: {product.price}
                   </Typography>
                   <Button
                     size="small"
