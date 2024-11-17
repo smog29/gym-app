@@ -75,7 +75,7 @@ const Shop = () => {
         ref={containerRef}
         sx={{
           display: "flex",
-          gap: 2, // Reduced gap for more compact layout
+          gap: 3, // Increase gap between items for better spacing
           overflow: "hidden",
           scrollbarWidth: "none", // For Firefox
           msOverflowStyle: "none", // For IE/Edge
@@ -99,12 +99,23 @@ const Shop = () => {
             sx={{
               flex: "0 0 calc(33.333% - 1rem)", // Adjust to take up 1/3 of the width (3 items per row)
               maxWidth: "calc(33.333% - 1rem)", // Ensure each item takes up 1/3 of the width
+              transition: "transform 0.3s ease, filter 0.3s ease", // Add smooth scaling and filter transition
+              filter: hoveredProduct && hoveredProduct !== product.id ? "blur(4px)" : "none", // Foggy effect on other items
+              overflow: "visible", // Ensure the content does not get clipped when scaled
+              transformOrigin: "center", // Scale from the center so it's even on both sides
             }}
             onMouseEnter={() => setHoveredProduct(product.id)} // Show details on hover
             onMouseLeave={() => setHoveredProduct(null)} // Hide details when mouse leaves
             onClick={() => setHoveredProduct(product.id)} // Show details on click
           >
-            <Card sx={{ textAlign: "center", position: "relative" }}>
+            <Card
+              sx={{
+                textAlign: "center",
+                position: "relative",
+                transition: "transform 0.3s ease", // Smooth transition for scaling the entire card
+                transform: hoveredProduct === product.id ? "scale(1.1)" : "scale(1)", // Apply scaling to the entire card
+              }}
+            >
               <CardMedia
                 component="img"
                 height="400" // Increased height for larger image

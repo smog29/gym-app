@@ -141,8 +141,8 @@ const Testimonials = () => {
 
       {/* Navigation Buttons */}
       <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-        <Button onClick={prevSlide} sx={{ marginRight: 2 }}>Poprzedni</Button>
-        <Button onClick={nextSlide}>Następny</Button>
+        <Button onClick={prevSlide} sx={{ marginRight: 2 }}>Poprzednia</Button>
+        <Button onClick={nextSlide}>Następna</Button>
       </Box>
     </Container>
   );
