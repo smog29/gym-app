@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
-import { Home, FitnessCenter, Info, QuestionAnswer, ContactMail } from '@mui/icons-material';
+import { Home, Info, QuestionAnswer, ContactMail, Shop } from '@mui/icons-material';
+
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -63,11 +64,11 @@ const Header = () => {
         {/* Navigation buttons with icons (Horizontal layout) */}
         <Box sx={{ display: 'flex', gap: 3 }}>
           {Object.entries({
-            'Home': { text: 'Home', icon: <Home /> },
-            'Workout': { text: 'Workout', icon: <FitnessCenter /> }, // Gym-specific icon
-            'About': { text: 'About', icon: <Info /> },
+            'About': { text: 'O mnie', icon: <Info /> },
+            'Shop': { text: 'Sklep', icon: <Shop /> },
             'FAQ': { text: 'FAQ', icon: <QuestionAnswer /> },
-            'Contact': { text: 'Contact', icon: <ContactMail /> },
+            'Testimonials': { text: 'Opinie', icon: <Home /> },
+            'Contact': { text: 'Kontakt', icon: <ContactMail /> },
           }).map(([component, { text, icon }]) => (
             <Button
               key={component}
