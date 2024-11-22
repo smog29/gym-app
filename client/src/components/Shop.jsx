@@ -61,14 +61,24 @@ const Shop = () => {
     <Container
       id="shop"
       sx={{
-        py: { xs: 4, sm: 6 }, // Add more padding on larger screens
+        py: { xs: 4, sm: 6 },
         maxWidth: "100%",
         margin: "0 auto",
-        paddingTop: { xs: 4, sm: 6 }, // More space above on larger screens
-        paddingBottom: { xs: 4, sm: 6 }, // More space below on larger screens
+        paddingTop: { xs: 4, sm: 6 },
+        paddingBottom: { xs: 4, sm: 6 },
       }}
     >
-      <Typography variant="h4" gutterBottom sx={{ textAlign: "center", mb: 4 }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          fontWeight: "bold",
+          mb: 4,
+          color: "#333",
+          textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
         Sprawdź produkty
       </Typography>
       <Box
@@ -85,7 +95,6 @@ const Shop = () => {
           },
           cursor: "grab",
           userSelect: "none",
-          // Mobile only
           "@media (max-width: 600px)": {
             flexWrap: "nowrap", // Make sure it's horizontally scrollable
           },
@@ -108,7 +117,6 @@ const Shop = () => {
               filter: hoveredProduct && hoveredProduct !== product.id ? "blur(4px)" : "none",
               overflow: "visible",
               transformOrigin: "center",
-              // Desktop
               "@media (min-width: 600px)": {
                 flex: "0 0 calc(33.333% - 1rem)", // 3 items per row on larger screens
                 maxWidth: "calc(33.333% - 1rem)",
@@ -128,7 +136,7 @@ const Shop = () => {
             >
               <CardMedia
                 component="img"
-                height="400"
+                height="400" // Default height for desktop
                 image={product.image}
                 alt={product.title}
                 sx={{
@@ -136,6 +144,9 @@ const Shop = () => {
                   opacity: hoveredProduct === product.id ? 0.3 : 1,
                   cursor: "pointer",
                   objectFit: "cover",
+                  "@media (max-width: 600px)": {
+                    height: "350px", // Increased height on mobile
+                  },
                 }}
               />
               {(hoveredProduct === product.id || hoveredProduct === null) && (
