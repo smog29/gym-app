@@ -69,11 +69,12 @@ const Shop = () => {
       }}
     >
       <Typography variant="h4" gutterBottom>
-        Sklep
+        Sprawdź produkty
       </Typography>
       <Box
         ref={containerRef}
         sx={{
+          py: 8,
           display: "flex",
           gap: 3, // Increase gap between items for better spacing
           overflow: "hidden",
