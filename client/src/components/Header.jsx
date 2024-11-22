@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
-import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import { AppBar, Toolbar, Button, Box, useMediaQuery } from '@mui/material';
 import { Home, Info, QuestionAnswer, ContactMail, Shop } from '@mui/icons-material';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm')); // Check for mobile screen size
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
       setIsScrolled(true);
+      if (isMobile) {
+        setIsHeaderVisible(false); // Hide header on scroll down (mobile only)
+      }
     } else {
       setIsScrolled(false);
+      if (isMobile) {
+        setIsHeaderVisible(true); // Show header when at the top (mobile only)
+      }
     }
   };
 
@@ -18,7 +26,7 @@ const Header = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isMobile]); // Re-run effect when mobile screen size changes
 
   return (
     <AppBar
@@ -32,6 +40,8 @@ const Header = () => {
         color: 'white',
         transition: 'all 0.3s ease',
         padding: isScrolled ? '5px 20px' : '15px 30px', // More padding when at the top
+        opacity: isHeaderVisible ? 1 : 0, // Hide the header on scroll (mobile only)
+        transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-100%)', // Smooth transition to hide the header
       }}
     >
       <Toolbar
@@ -40,13 +50,15 @@ const Header = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
+          flexDirection: isMobile ? 'column' : 'row', // Stack elements on mobile
+          gap: isMobile ? 1 : 3, // Add gap between elements on mobile, but keep it smaller
         }}
       >
         {/* Left side: Logo with dynamic size */}
         <Box
           sx={{
-            width: isScrolled ? 150 : 200, // Smaller logo on scroll
-            height: isScrolled ? 75 : 100, // Adjust logo size on scroll
+            width: isScrolled ? 120 : 150, // Even smaller logo on mobile and scroll
+            height: isScrolled ? 60 : 75, // Smaller height on mobile and scroll
             backgroundImage: 'url("/images/logo.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -60,8 +72,15 @@ const Header = () => {
           }}
         />
 
-        {/* Navigation buttons with icons (Horizontal layout) */}
-        <Box sx={{ display: 'flex', gap: 3 }}>
+        {/* Navigation buttons with icons (Horizontal or Vertical layout based on screen size) */}
+        <Box sx={{
+          display: 'flex',
+          flexDirection: isMobile ? 'column' : 'row', 
+          gap: isMobile ? 1 : 3, // Reduced gap between items on mobile
+          width: '100%', 
+          justifyContent: isMobile ? 'center' : 'flex-end',
+          paddingTop: isMobile ? 1 : 0, // Small padding on top on mobile
+        }}>
           {Object.entries({
             'About': { text: 'O mnie', icon: <Info /> },
             'Shop': { text: 'Sklep', icon: <Shop /> },
@@ -77,11 +96,13 @@ const Header = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 1,
-                fontSize: isScrolled ? '0.9rem' : '1.2rem', // Smaller font size when scrolled
+                fontSize: isScrolled ? '0.8rem' : '1rem', // Smaller font size when scrolled or on mobile
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
                 letterSpacing: 1.2,
                 transition: 'all 0.3s ease',
+                width: isMobile ? '100%' : 'auto', // Full width buttons on mobile
+                padding: isMobile ? '5px 0' : '10px 20px', // Adjust padding on mobile
                 '&:hover': {
                   backgroundColor: 'rgba(255, 87, 34, 0.1)',
                   color: '#FF5722',
