@@ -6,12 +6,12 @@ const Shop = () => {
   const containerRef = useRef(null);
 
   const products = [
-    { id: 1, title: "Product 1", price: "$10", image: "images/handles.jpeg" },
-    { id: 2, title: "Product 2", price: "$20", image: "images/handles.jpeg" },
-    { id: 3, title: "Product 3", price: "$30", image: "images/handles.jpeg" },
-    { id: 4, title: "Product 4", price: "$40", image: "images/handles.jpeg" },
-    { id: 5, title: "Product 5", price: "$50", image: "images/handles.jpeg" },
-    { id: 6, title: "Product 6", price: "$60", image: "images/handles.jpeg" },
+    { id: 1, title: "Product 1", price: "10", image: "images/handles.jpeg" },
+    { id: 2, title: "Product 2", price: "20", image: "images/handles.jpeg" },
+    { id: 3, title: "Product 3", price: "30", image: "images/handles.jpeg" },
+    { id: 4, title: "Product 4", price: "40", image: "images/handles.jpeg" },
+    { id: 5, title: "Product 5", price: "50", image: "images/handles.jpeg" },
+    { id: 6, title: "Product 6", price: "60", image: "images/handles.jpeg" },
   ];
 
   const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -74,7 +74,7 @@ const Shop = () => {
       <Box
         ref={containerRef}
         sx={{
-          py: 2,
+          py: 8,
           display: "flex",
           gap: 3,
           overflow: "hidden",
@@ -150,7 +150,7 @@ const Shop = () => {
                     {product.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary" mb={2}>
-                    Cena: {product.price}
+                    Cena: {product.price} zł
                   </Typography>
                   <Button
                     size="small"
