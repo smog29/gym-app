@@ -7,11 +7,9 @@ const Shop = () => {
 
   const products = [
     { id: 1, title: "Product 1", price: "10", image: "images/handles.jpeg" },
-    { id: 2, title: "Product 2", price: "20", image: "images/handles.jpeg" },
-    { id: 3, title: "Product 3", price: "30", image: "images/handles.jpeg" },
-    { id: 4, title: "Product 4", price: "40", image: "images/handles.jpeg" },
-    { id: 5, title: "Product 5", price: "50", image: "images/handles.jpeg" },
-    { id: 6, title: "Product 6", price: "60", image: "images/handles.jpeg" },
+    { id: 2, title: "Product 2", price: "20", image: "images/handles2.jpg" },
+    { id: 3, title: "Product 3", price: "30", image: "images/ball.jpg" },
+    { id: 5, title: "Product 5", price: "50", image: "images/shoes.jpg" },
   ];
 
   const [hoveredProduct, setHoveredProduct] = useState(null);
@@ -63,9 +61,11 @@ const Shop = () => {
     <Container
       id="shop"
       sx={{
-        py: 4,
+        py: { xs: 4, sm: 6 }, // Add more padding on larger screens
         maxWidth: "100%",
         margin: "0 auto",
+        paddingTop: { xs: 4, sm: 6 }, // More space above on larger screens
+        paddingBottom: { xs: 4, sm: 6 }, // More space below on larger screens
       }}
     >
       <Typography variant="h4" gutterBottom sx={{ textAlign: "center", mb: 4 }}>
@@ -77,7 +77,7 @@ const Shop = () => {
           py: 8,
           display: "flex",
           gap: 3,
-          overflow: "hidden",
+          overflowX: "scroll", // Make horizontal scrolling active
           scrollbarWidth: "none",
           msOverflowStyle: "none",
           "&::-webkit-scrollbar": {
@@ -85,6 +85,10 @@ const Shop = () => {
           },
           cursor: "grab",
           userSelect: "none",
+          // Mobile only
+          "@media (max-width: 600px)": {
+            flexWrap: "nowrap", // Make sure it's horizontally scrollable
+          },
         }}
         onMouseDown={handleDragStart}
         onTouchStart={handleDragStart}
@@ -98,12 +102,17 @@ const Shop = () => {
           <Box
             key={product.id}
             sx={{
-              flex: "0 0 calc(33.333% - 1rem)",
-              maxWidth: "calc(33.333% - 1rem)",
+              flex: "0 0 100%", // Set to 100% to show one item at a time on mobile
+              maxWidth: "100%", // Keep it to 100% width for mobile
               transition: "transform 0.3s ease, filter 0.3s ease",
               filter: hoveredProduct && hoveredProduct !== product.id ? "blur(4px)" : "none",
               overflow: "visible",
               transformOrigin: "center",
+              // Desktop
+              "@media (min-width: 600px)": {
+                flex: "0 0 calc(33.333% - 1rem)", // 3 items per row on larger screens
+                maxWidth: "calc(33.333% - 1rem)",
+              },
             }}
             onMouseEnter={() => setHoveredProduct(product.id)}
             onMouseLeave={() => setHoveredProduct(null)}
