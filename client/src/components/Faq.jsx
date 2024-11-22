@@ -3,8 +3,8 @@ import { Container, Typography, Box, Button } from "@mui/material";
 
 const FAQ = () => {
   const [selectedQuestion, setSelectedQuestion] = useState(1);
-  const [isVisible, setIsVisible] = useState(false); // State to track visibility of FAQ section
-  const faqRef = useRef(null); // Reference for the FAQ container
+  const [isVisible, setIsVisible] = useState(false);
+  const faqRef = useRef(null);
 
   const questions = [
     { id: 1, question: "Jakie są godziny otwarcia?", answer: "Jestem otwarty od poniedziałku do piątku w godzinach 6:00 - 22:00, a w weekendy od 8:00 do 20:00." },
@@ -16,24 +16,19 @@ const FAQ = () => {
   ];
 
   const handleClick = (id) => {
-    if (selectedQuestion === id) {
-      setSelectedQuestion(null); // Toggle visibility of answer
-    } else {
-      setSelectedQuestion(id); // Show the selected question's answer
-    }
+    setSelectedQuestion(selectedQuestion === id ? null : id);
   };
 
-  // IntersectionObserver to trigger fade-in effect
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true); // Set visibility to true when FAQ is in view
+            setIsVisible(true);
           }
         });
       },
-      { threshold: 0.5 } // Trigger when 50% of the FAQ section is visible
+      { threshold: 0.5 }
     );
 
     if (faqRef.current) {
@@ -52,56 +47,55 @@ const FAQ = () => {
       id="faq"
       ref={faqRef}
       sx={{
-        py: 4,
-        maxWidth: "100%",
+        py: 6,
+        maxWidth: "1200px",
         margin: "0 auto",
       }}
-      className={`fade-in ${isVisible ? 'visible' : ''}`} // Apply class for fade-in effect
+      className={`fade-in ${isVisible ? "visible" : ""}`}
     >
-      <Typography variant="h4" gutterBottom sx={{ textAlign: "center" }}>
-        FAQ
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          fontWeight: "bold",
+          mb: 4,
+          color: "#333",
+          textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+        }}
+      >
+        Najczęściej zadawane pytania
       </Typography>
       <Box
         sx={{
-          display: "flex",
-          flexDirection: "row",
+          display: "grid",
+          gridTemplateColumns: "1fr 2fr",
           gap: 4,
+          alignItems: "start",
         }}
       >
-        {/* Questions Block */}
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: 2,
-            justifyContent: "center",
-            alignItems: "center",
-            position: "relative",
-            width: "100%",
-            height: "auto",
-            transition: "all 0.5s ease",
-          }}
-        >
+        {/* Questions */}
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
           {questions.map((question) => (
             <Button
               key={question.id}
               onClick={() => handleClick(question.id)}
               sx={{
                 textAlign: "left",
+                padding: "15px 20px",
                 borderRadius: "10px",
-                padding: "15px",
-                backgroundColor: selectedQuestion === question.id ? "#e0e0e0" : "#f0f0f0",
-                color: selectedQuestion === question.id ? "#000" : "#333",
+                backgroundColor: selectedQuestion === question.id ? "#4caf50" : "#f0f0f0",
+                color: selectedQuestion === question.id ? "#fff" : "#333",
                 fontWeight: "bold",
                 fontSize: "18px",
-                width: "100%",
+                boxShadow:
+                  selectedQuestion === question.id
+                    ? "0 4px 12px rgba(76, 175, 80, 0.3)"
+                    : "0 2px 8px rgba(0,0,0,0.1)",
+                transition: "all 0.3s ease",
                 "&:hover": {
-                  backgroundColor: "#e0e0e0",
+                  backgroundColor: selectedQuestion === question.id ? "#45a047" : "#e0e0e0",
                 },
-                transition: "transform 0.5s ease-in-out",
-                transform:
-                  selectedQuestion === question.id ? "translateX(-100px)" : "none",
               }}
             >
               {question.question}
@@ -109,34 +103,52 @@ const FAQ = () => {
           ))}
         </Box>
 
-        {/* Answer Block */}
+        {/* Answer */}
         <Box
           sx={{
-            flex: 3,
-            padding: "30px",
-            borderRadius: "10px",
             backgroundColor: "#f7f7f7",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
-            height: "auto",
-            maxHeight: "500px",
-            overflowY: "auto",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "flex-start",
-            opacity: selectedQuestion ? 1 : 0, // Fade in/out answer block
-            transition: "opacity 0.5s ease",
+            borderRadius: "10px",
+            padding: "30px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+            transform: selectedQuestion ? "translateY(0)" : "translateY(20px)",
+            opacity: selectedQuestion ? 1 : 0,
+            transition: "all 0.3s ease",
           }}
         >
-          {selectedQuestion && (
+          {selectedQuestion ? (
             <>
-              <Typography variant="h5" sx={{ fontWeight: "bold", marginBottom: 2 }}>
-                Odpowiedź:
+              <Typography
+                variant="h5"
+                sx={{
+                  fontWeight: "bold",
+                  color: "#333",
+                  mb: 2,
+                  borderBottom: "2px solid #4caf50",
+                  display: "inline-block",
+                  paddingBottom: "5px",
+                }}
+              >
+                {questions.find((q) => q.id === selectedQuestion).question}
               </Typography>
-              <Typography variant="h6" sx={{ fontSize: "24px", fontWeight: "bold" }}>
+              <Typography
+                variant="body1"
+                sx={{ fontSize: "18px", color: "#555", lineHeight: 1.8 }}
+              >
                 {questions.find((q) => q.id === selectedQuestion).answer}
               </Typography>
             </>
+          ) : (
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: "18px",
+                color: "#888",
+                textAlign: "center",
+                fontStyle: "italic",
+              }}
+            >
+              Wybierz pytanie, aby zobaczyć odpowiedź.
+            </Typography>
           )}
         </Box>
       </Box>

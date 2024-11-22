@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Container, Typography, Box, Card, CardContent, CardMedia, Button } from "@mui/material";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart"; // Import the shopping cart icon
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const Shop = () => {
   const containerRef = useRef(null);
@@ -19,23 +19,23 @@ const Shop = () => {
   useEffect(() => {
     const container = containerRef.current;
 
+    const handleScroll = () => {
+      const firstItem = container.firstChild;
+      const lastItem = container.lastChild;
+
+      if (container.scrollLeft <= 0) {
+        container.scrollLeft += lastItem.offsetWidth;
+        container.prepend(lastItem);
+      } else if (
+        container.scrollLeft + container.clientWidth >=
+        container.scrollWidth
+      ) {
+        container.scrollLeft -= firstItem.offsetWidth;
+        container.append(firstItem);
+      }
+    };
+
     if (container) {
-      const handleScroll = () => {
-        const firstItem = container.firstChild;
-        const lastItem = container.lastChild;
-
-        if (container.scrollLeft <= 0) {
-          container.scrollLeft += lastItem.offsetWidth;
-          container.prepend(lastItem);
-        } else if (
-          container.scrollLeft + container.clientWidth >=
-          container.scrollWidth
-        ) {
-          container.scrollLeft -= firstItem.offsetWidth;
-          container.append(firstItem);
-        }
-      };
-
       container.addEventListener("scroll", handleScroll);
       return () => container.removeEventListener("scroll", handleScroll);
     }
@@ -64,24 +64,24 @@ const Shop = () => {
       id="shop"
       sx={{
         py: 4,
-        maxWidth: "100%", // Make container span the full width of the screen
-        margin: "0 auto", // Center the container
+        maxWidth: "100%",
+        margin: "0 auto",
       }}
     >
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ textAlign: "center", mb: 4 }}>
         Sprawdź produkty
       </Typography>
       <Box
         ref={containerRef}
         sx={{
-          py: 8,
+          py: 2,
           display: "flex",
-          gap: 3, // Increase gap between items for better spacing
+          gap: 3,
           overflow: "hidden",
-          scrollbarWidth: "none", // For Firefox
-          msOverflowStyle: "none", // For IE/Edge
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
           "&::-webkit-scrollbar": {
-            display: "none", // For WebKit browsers
+            display: "none",
           },
           cursor: "grab",
           userSelect: "none",
@@ -98,35 +98,35 @@ const Shop = () => {
           <Box
             key={product.id}
             sx={{
-              flex: "0 0 calc(33.333% - 1rem)", // Adjust to take up 1/3 of the width (3 items per row)
-              maxWidth: "calc(33.333% - 1rem)", // Ensure each item takes up 1/3 of the width
-              transition: "transform 0.3s ease, filter 0.3s ease", // Add smooth scaling and filter transition
-              filter: hoveredProduct && hoveredProduct !== product.id ? "blur(4px)" : "none", // Foggy effect on other items
-              overflow: "visible", // Ensure the content does not get clipped when scaled
-              transformOrigin: "center", // Scale from the center so it's even on both sides
+              flex: "0 0 calc(33.333% - 1rem)",
+              maxWidth: "calc(33.333% - 1rem)",
+              transition: "transform 0.3s ease, filter 0.3s ease",
+              filter: hoveredProduct && hoveredProduct !== product.id ? "blur(4px)" : "none",
+              overflow: "visible",
+              transformOrigin: "center",
             }}
-            onMouseEnter={() => setHoveredProduct(product.id)} // Show details on hover
-            onMouseLeave={() => setHoveredProduct(null)} // Hide details when mouse leaves
-            onClick={() => setHoveredProduct(product.id)} // Show details on click
+            onMouseEnter={() => setHoveredProduct(product.id)}
+            onMouseLeave={() => setHoveredProduct(null)}
+            onClick={() => setHoveredProduct(product.id)}
           >
             <Card
               sx={{
                 textAlign: "center",
                 position: "relative",
-                transition: "transform 0.3s ease", // Smooth transition for scaling the entire card
-                transform: hoveredProduct === product.id ? "scale(1.1)" : "scale(1)", // Apply scaling to the entire card
+                transition: "transform 0.3s ease",
+                transform: hoveredProduct === product.id ? "scale(1.1)" : "scale(1)",
               }}
             >
               <CardMedia
                 component="img"
-                height="400" // Increased height for larger image
+                height="400"
                 image={product.image}
                 alt={product.title}
                 sx={{
                   transition: "opacity 0.3s ease",
-                  opacity: hoveredProduct === product.id ? 0.3 : 1, // Dim image on hover
-                  cursor: "pointer", // Change cursor on hover
-                  objectFit: "cover", // Ensures the image fills the area
+                  opacity: hoveredProduct === product.id ? 0.3 : 1,
+                  cursor: "pointer",
+                  objectFit: "cover",
                 }}
               />
               {(hoveredProduct === product.id || hoveredProduct === null) && (
@@ -137,12 +137,12 @@ const Shop = () => {
                     left: "0",
                     right: "0",
                     bottom: "0",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent background
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    opacity: hoveredProduct === product.id ? 1 : 0, // Show content on hover
+                    opacity: hoveredProduct === product.id ? 1 : 0,
                     transition: "opacity 0.3s ease",
                   }}
                 >
@@ -154,14 +154,14 @@ const Shop = () => {
                   </Typography>
                   <Button
                     size="small"
-                    variant="contained" // Change variant to 'contained' for a solid background
-                    startIcon={<AddShoppingCartIcon />} // Add shopping cart icon
+                    variant="contained"
+                    startIcon={<AddShoppingCartIcon />}
                     sx={{
-                      backgroundColor: "white", // White background
-                      color: "black", // Black text color
-                      borderColor: "black", // Black border
+                      backgroundColor: "white",
+                      color: "black",
+                      borderColor: "black",
                       "&:hover": {
-                        backgroundColor: "rgba(0, 0, 0, 0.1)", // Light hover effect
+                        backgroundColor: "rgba(0, 0, 0, 0.1)",
                       },
                     }}
                   >
