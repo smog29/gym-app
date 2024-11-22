@@ -34,11 +34,14 @@ const About = () => {
       id="about"
       sx={{
         paddingY: 4,
-        height: "100vh", // Set height to full viewport height
+        paddingTop: { xs: 2, sm: 4 },
+        paddingBottom: { xs: 2, sm: 6 }, // Add more space under the section on larger screens
         display: "flex",
-        flexDirection: "column", // Make the container a flexbox
-        justifyContent: "center", // Vertically center the content
-        alignItems: "center", // Horizontally center the content
+        flexDirection: "column", // Flexbox layout
+        justifyContent: "center", // Vertically center content
+        alignItems: "center", // Horizontally center content
+        marginTop: { xs: 3, sm: 8 }, // Increase space above on larger screens
+        maxWidth: { xs: '100%', sm: '85%' }, // Wider container on larger screens
       }}
       className={`fade-in ${isVisible ? 'visible' : ''}`}
     >
@@ -47,8 +50,9 @@ const About = () => {
         spacing={4}
         alignItems="center"
         sx={{
-          height: "100%", // Make the grid take up the full height of the container
-          justifyContent: "center", // Center the content inside the grid
+          width: '100%',
+          justifyContent: "center",
+          height: "auto", // Adjust height dynamically
         }}
       >
         {/* Left side: Image */}
@@ -56,10 +60,10 @@ const About = () => {
           <Box
             sx={{
               width: '100%',
-              height: '60vh', // Make the image container take up 60% of the viewport height
+              height: { xs: '40vh', sm: '60vh' }, // Adjust height based on screen size
               overflow: 'hidden',
-              borderRadius: '16px', // Rounded corners for the container
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)', // Optional: Adds a subtle shadow for a modern effect
+              borderRadius: '16px',
+              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
             }}
           >
             <img
@@ -68,8 +72,8 @@ const About = () => {
               style={{
                 width: '100%',
                 height: '100%',
-                objectFit: 'cover', // Ensures the image covers the container area
-                borderRadius: '16px', // Rounded corners for the image itself
+                objectFit: 'cover',
+                borderRadius: '16px',
               }}
             />
           </Box>
