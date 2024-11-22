@@ -103,11 +103,25 @@ const Header = () => {
                 transition: 'all 0.3s ease',
                 width: isMobile ? '100%' : 'auto', // Full width buttons on mobile
                 padding: isMobile ? '5px 0' : '10px 20px', // Adjust padding on mobile
+                position: 'relative', // Needed for pseudo-element positioning
                 '&:hover': {
                   backgroundColor: 'rgba(255, 87, 34, 0.1)',
                   color: '#FF5722',
                   borderRadius: '5px',
                   transform: 'scale(1.05)',
+                },
+                '&:hover::after': {
+                  content: '""',
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  width: '120%', // The circle will be slightly larger than the button
+                  height: '120%',
+                  backgroundColor: 'white',
+                  borderRadius: '50%', // Make the pseudo-element circular
+                  zIndex: -1, // Ensure the circle appears behind the button
+                  transition: 'all 0.3s ease',
                 },
               }}
             >
