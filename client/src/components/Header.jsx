@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Button, Box } from '@mui/material';
 import { Home, Info, QuestionAnswer, ContactMail, Shop } from '@mui/icons-material';
 
-
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -26,8 +25,8 @@ const Header = () => {
       position="sticky"
       sx={{
         background: isScrolled
-          ? 'linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(255, 87, 34, 1) 100%)' // Gym-like gradient (dark to vibrant orange)
-          : 'linear-gradient(90deg, rgba(0, 0, 0, 1) 0%, rgba(255, 87, 34, 0.8) 70%)', // Slightly faded gradient at the top
+          ? 'linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 87, 34, 1) 100%)' // Strong red gradient
+          : 'linear-gradient(90deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 87, 34, 0.8) 70%)', // Faded red gradient at the top
         boxShadow: 4,
         zIndex: 1300,
         color: 'white',
