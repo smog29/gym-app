@@ -9,6 +9,7 @@ import Header from './components/Header';
 import About from './components/About';
 import Shop from './components/Shop';
 import Faq from './components/Faq';
+import Transformations from './components/Transformations'
 import Testimonials from './components/Testimonials';
 import Form from './components/Form';
 import Contact from './components/Contact';
@@ -35,6 +36,7 @@ function App() {
       <About />
       <Shop />
       <Faq />
+      <Transformations />
       <Testimonials />
       <Form />
       <Contact />
