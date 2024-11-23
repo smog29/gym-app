@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Button, Box, useMediaQuery } from '@mui/material';
 import { Home, Info, QuestionAnswer, ContactMail, Shop } from '@mui/icons-material';
+import DescriptionIcon from '@mui/icons-material/Description';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,6 +28,17 @@ const Header = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [isMobile]); // Re-run effect when mobile screen size changes
+
+  // Smooth scroll function
+  const handleSmoothScroll = (id) => {
+    const targetElement = document.getElementById(id);
+    if (targetElement) {
+      targetElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
+  };
 
   return (
     <AppBar
@@ -86,12 +98,13 @@ const Header = () => {
             'Shop': { text: 'Sklep', icon: <Shop /> },
             'FAQ': { text: 'FAQ', icon: <QuestionAnswer /> },
             'Testimonials': { text: 'Opinie', icon: <Home /> },
+            'Form': { text: 'Formularz', icon: <DescriptionIcon /> }, 
             'Contact': { text: 'Kontakt', icon: <ContactMail /> },
           }).map(([component, { text, icon }]) => (
             <Button
               key={component}
               color="inherit"
-              href={`#${component.toLowerCase()}`}
+              onClick={() => handleSmoothScroll(component.toLowerCase())} // Use smooth scroll function
               sx={{
                 display: 'inline-flex',
                 alignItems: 'center',
