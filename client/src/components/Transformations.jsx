@@ -26,7 +26,7 @@ const Transformations = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % transformationsData.length);
-    }, 5000); // Change every 5 seconds
+    }, 7000); // Change every 7 seconds for a slower transition
 
     return () => clearInterval(interval); // Clean up the interval on unmount
   }, []);
@@ -41,7 +41,6 @@ const Transformations = () => {
         background: 'linear-gradient(135deg, rgba(255, 87, 34, 0.1) 0%, rgba(255, 0, 0, 0.2) 100%)',
         borderRadius: '15px',
         boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
-        maxWidth: '100%',
       }}
     >
       <Fade in={true} timeout={1000}>
@@ -52,19 +51,23 @@ const Transformations = () => {
 
       <Grid container spacing={4} justifyContent="center" sx={{ display: 'flex', justifyContent: 'center' }}>
         <Grid item xs={12} sm={5} sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Fade in={true} timeout={1500}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h6" sx={{ marginBottom: '1rem', fontSize: '1.2rem', color: '#FF5722', fontWeight: 'bold' }}>
-                Przed
-              </Typography>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ marginBottom: '1rem', fontSize: '1.2rem', color: '#FF5722', fontWeight: 'bold' }}>
+              Przed
+            </Typography>
+            <Fade
+              in={true}
+              timeout={{ enter: 2000, exit: 2000 }} // Slow fade in and fade out
+              key={currentTransformation.beforeImage} // Key to trigger fade on image change
+            >
               <img
                 src={currentTransformation.beforeImage}
                 alt={`Before ${currentTransformation.name}`}
                 style={{
                   maxWidth: '100%',
-                  width: 'auto', // Allow the image to scale responsively but maintain aspect ratio
-                  height: 'auto', // Maintain aspect ratio on smaller screens
-                  maxHeight: '500px',  // Increase max height to 500px for better display
+                  width: 'auto', // Ensure the image scales responsively
+                  height: 'auto', // Maintain aspect ratio
+                  maxHeight: '500px',  // Limit height to 500px for better display
                   borderRadius: '15px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
                   transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -72,24 +75,28 @@ const Transformations = () => {
                 onMouseEnter={(e) => (e.target.style.transform = 'scale(1.05)')}
                 onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')}
               />
-            </Box>
-          </Fade>
+            </Fade>
+          </Box>
         </Grid>
 
         <Grid item xs={12} sm={5} sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Fade in={true} timeout={2000}>
-            <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h6" sx={{ marginBottom: '1rem', fontSize: '1.2rem', color: '#FF5722', fontWeight: 'bold' }}>
-                Po
-              </Typography>
+          <Box sx={{ textAlign: 'center' }}>
+            <Typography variant="h6" sx={{ marginBottom: '1rem', fontSize: '1.2rem', color: '#FF5722', fontWeight: 'bold' }}>
+              Po
+            </Typography>
+            <Fade
+              in={true}
+              timeout={{ enter: 2000, exit: 2000 }} // Slow fade in and fade out
+              key={currentTransformation.afterImage} // Key to trigger fade on image change
+            >
               <img
                 src={currentTransformation.afterImage}
                 alt={`After ${currentTransformation.name}`}
                 style={{
                   maxWidth: '100%',
-                  width: 'auto', // Ensure the width scales responsively
+                  width: 'auto', // Ensure the image scales responsively
                   height: 'auto', // Maintain aspect ratio
-                  maxHeight: '500px',  // Limit height to 500px, so images don't become too large
+                  maxHeight: '500px',  // Limit height to 500px for better display
                   borderRadius: '15px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
                   transition: 'transform 0.3s ease, box-shadow 0.3s ease',
@@ -97,8 +104,8 @@ const Transformations = () => {
                 onMouseEnter={(e) => (e.target.style.transform = 'scale(1.05)')}
                 onMouseLeave={(e) => (e.target.style.transform = 'scale(1)')}
               />
-            </Box>
-          </Fade>
+            </Fade>
+          </Box>
         </Grid>
       </Grid>
     </Box>
