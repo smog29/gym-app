@@ -113,7 +113,7 @@ const Contact = () => {
       {/* Right Section - Large Image */}
       <Box sx={{ flex: 1, maxWidth: '500px' }}>
         <img
-          src="images/contact.jpeg" // Replace with your desired image URL
+          src="images/contact.jpg"
           alt="Contact"
           style={{
             width: '100%',
