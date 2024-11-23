@@ -44,7 +44,7 @@ const Transformations = () => {
       }}
     >
       <Fade in={true} timeout={1000}>
-        <Typography variant="h3" sx={{ marginBottom: '2rem', fontWeight: 'bold', fontSize: '2rem', color: '#333' }}>
+        <Typography variant="h3" sx={{ marginBottom: '2rem', fontWeight: 'bold', fontSize: '4rem', color: '#333' }}>
           {currentTransformation.name}
         </Typography>
       </Fade>

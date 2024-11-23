@@ -29,13 +29,15 @@ const Header = () => {
     };
   }, [isMobile]); // Re-run effect when mobile screen size changes
 
-  // Smooth scroll function
+  // Smooth scroll function with offset
   const handleSmoothScroll = (id) => {
     const targetElement = document.getElementById(id);
     if (targetElement) {
-      targetElement.scrollIntoView({
+      // Calculate the scroll position with an offset (100px below the top)
+      const offsetPosition = targetElement.offsetTop - 100; // Adjust this value as needed
+      window.scrollTo({
+        top: offsetPosition,
         behavior: 'smooth',
-        block: 'start',
       });
     }
   };
@@ -45,15 +47,15 @@ const Header = () => {
       position="sticky"
       sx={{
         background: isScrolled
-          ? 'linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 87, 34, 1) 100%)' // Strong red gradient
-          : 'linear-gradient(90deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 87, 34, 0.8) 70%)', // Faded red gradient at the top
+          ? 'linear-gradient(90deg, rgba(255, 0, 0, 1) 0%, rgba(255, 87, 34, 1) 100%)'
+          : 'linear-gradient(90deg, rgba(255, 0, 0, 0.8) 0%, rgba(255, 87, 34, 0.8) 70%)',
         boxShadow: 4,
         zIndex: 1300,
         color: 'white',
         transition: 'all 0.3s ease',
-        padding: isScrolled ? '5px 20px' : '15px 30px', // More padding when at the top
-        opacity: isHeaderVisible ? 1 : 0, // Hide the header on scroll (mobile only)
-        transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-100%)', // Smooth transition to hide the header
+        padding: isScrolled ? '5px 20px' : '15px 30px',
+        opacity: isHeaderVisible ? 1 : 0,
+        transform: isHeaderVisible ? 'translateY(0)' : 'translateY(-100%)',
       }}
     >
       <Toolbar
@@ -62,15 +64,14 @@ const Header = () => {
           justifyContent: 'space-between',
           alignItems: 'center',
           width: '100%',
-          flexDirection: isMobile ? 'column' : 'row', // Stack elements on mobile
-          gap: isMobile ? 1 : 3, // Add gap between elements on mobile, but keep it smaller
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? 1 : 3,
         }}
       >
-        {/* Left side: Logo with dynamic size */}
         <Box
           sx={{
-            width: isScrolled ? 120 : 150, // Even smaller logo on mobile and scroll
-            height: isScrolled ? 60 : 75, // Smaller height on mobile and scroll
+            width: isScrolled ? 120 : 150,
+            height: isScrolled ? 60 : 75,
             backgroundImage: 'url("/images/logo.jpg")',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -80,18 +81,17 @@ const Header = () => {
             marginTop: isScrolled ? 1 : 2,
             marginBottom: isScrolled ? 1 : 2,
             boxShadow: isScrolled ? 2 : 4,
-            transition: 'all 0.3s ease', // Smooth transition for size and shadow
+            transition: 'all 0.3s ease',
           }}
         />
 
-        {/* Navigation buttons with icons (Horizontal or Vertical layout based on screen size) */}
         <Box sx={{
           display: 'flex',
-          flexDirection: isMobile ? 'column' : 'row', 
-          gap: isMobile ? 1 : 3, // Reduced gap between items on mobile
-          width: '100%', 
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? 1 : 3,
+          width: '100%',
           justifyContent: isMobile ? 'center' : 'flex-end',
-          paddingTop: isMobile ? 1 : 0, // Small padding on top on mobile
+          paddingTop: isMobile ? 1 : 0,
         }}>
           {Object.entries({
             'About': { text: 'O mnie', icon: <Info /> },
@@ -109,14 +109,14 @@ const Header = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 1,
-                fontSize: isScrolled ? '0.8rem' : '1rem', // Smaller font size when scrolled or on mobile
+                fontSize: isScrolled ? '0.8rem' : '1rem',
                 fontWeight: 'bold',
                 textTransform: 'uppercase',
                 letterSpacing: 1.2,
                 transition: 'all 0.3s ease',
-                width: isMobile ? '100%' : 'auto', // Full width buttons on mobile
-                padding: isMobile ? '5px 0' : '10px 20px', // Adjust padding on mobile
-                position: 'relative', // Needed for pseudo-element positioning
+                width: isMobile ? '100%' : 'auto',
+                padding: isMobile ? '5px 0' : '10px 20px',
+                position: 'relative',
                 '&:hover': {
                   backgroundColor: 'rgba(255, 87, 34, 0.1)',
                   color: '#FF5722',
@@ -129,11 +129,11 @@ const Header = () => {
                   top: '50%',
                   left: '50%',
                   transform: 'translate(-50%, -50%)',
-                  width: '120%', // The circle will be slightly larger than the button
+                  width: '120%',
                   height: '120%',
                   backgroundColor: 'white',
-                  borderRadius: '50%', // Make the pseudo-element circular
-                  zIndex: -1, // Ensure the circle appears behind the button
+                  borderRadius: '50%',
+                  zIndex: -1,
                   transition: 'all 0.3s ease',
                 },
               }}
