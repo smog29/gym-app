@@ -10,6 +10,7 @@ import About from './components/About';
 import Shop from './components/Shop';
 import Faq from './components/Faq';
 import Testimonials from './components/Testimonials';
+import Form from './components/Form';
 import Contact from './components/Contact';
 
 const theme = createTheme({
@@ -35,6 +36,7 @@ function App() {
       <Shop />
       <Faq />
       <Testimonials />
+      <Form />
       <Contact />
     </ThemeProvider>
   );
