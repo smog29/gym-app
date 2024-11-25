@@ -4,25 +4,20 @@ import { Container, Typography, Box, Card, CardContent, CardMedia, Button } from
 const Testimonials = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const [sliderValue, setSliderValue] = useState(50);
+  const [sliderValue, setSliderValue] = useState(100);
+  const intervalRef = useRef(null); // To store the interval ID
 
   const testimonials = [
     {
       id: 1,
-      before: 'images/before.jpg',
-      after: 'images/after.jpg',
-      opinion: 'To było dla mnie ogromne wyzwanie, ale z pomocą trenerów i odpowiednim planem treningowym udało mi się osiągnąć niesamowite rezultaty...',
-    },
-    {
-      id: 2,
-      before: 'images/before.jpg',
-      after: 'images/after.jpg',
+      before: 'images/before-marek.png',
+      after: 'images/after-marek.png',
       opinion: 'Kiedy zaczynałem moją przygodę z siłownią, nie wiedziałem, od czego zacząć... To było dla mnie ogromne wyzwanie, ale z pomocą trenerów i odpowiednim planem treningowym udało mi się osiągnąć niesamowite rezultaty...',
     },
     {
-      id: 3,
-      before: 'images/before.jpg',
-      after: 'images/after.jpg',
+      id: 2,
+      before: 'images/before-ania.png',
+      after: 'images/after-ania.png',
       opinion: 'Zdecydowałam się na treningi w tym miejscu, ponieważ miałam dość typowego podejścia do fitnessu...',
     },
   ];
@@ -52,14 +47,34 @@ const Testimonials = () => {
     };
   }, []);
 
+  const resetTimer = () => {
+    // Clear the existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    // Set a new interval to change the slide every 7 seconds
+    intervalRef.current = setInterval(() => {
+      setCurrentSlide((prevSlide) => (prevSlide + 1) % testimonials.length);
+    }, 7000);
+  };
+
+  useEffect(() => {
+    resetTimer(); // Start the timer when the component mounts
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
   const nextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % testimonials.length);
+    resetTimer(); // Reset the timer when moving to the next slide
   };
 
   const prevSlide = () => {
     setCurrentSlide((prevSlide) =>
       prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1
     );
+    resetTimer(); // Reset the timer when moving to the previous slide
   };
 
   const handleSliderChange = (event) => {
@@ -90,8 +105,8 @@ const Testimonials = () => {
           >
             <CardMedia
               component="img"
-              image={testimonials[currentSlide].before}
-              alt="Before"
+              image={testimonials[currentSlide].after}
+              alt="After"
               sx={{
                 width: '100%',
                 height: '100%',
@@ -104,8 +119,8 @@ const Testimonials = () => {
 
             <CardMedia
               component="img"
-              image={testimonials[currentSlide].after}
-              alt="After"
+              image={testimonials[currentSlide].before}
+              alt="Before"
               sx={{
                 width: '100%',
                 height: '100%',
