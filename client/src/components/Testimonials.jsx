@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Container, Typography, Box, Card, CardContent, CardMedia, Button, Fade } from '@mui/material';
 
 const Testimonials = () => {
@@ -102,6 +102,8 @@ const Testimonials = () => {
               borderRadius: '15px',
               height: '500px',
               padding: '10px', // Added padding to ensure the image doesn't touch the border
+              marginTop: '10px', // Added margin to create space at the top
+              marginBottom: '10px', // Added margin to create space at the bottom
             }}
           >
             <Fade in={true} timeout={1000}>
