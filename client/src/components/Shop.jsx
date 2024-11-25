@@ -1,60 +1,45 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Container, Typography, Box, Card, CardContent, CardMedia, Button } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const Shop = () => {
-  const containerRef = useRef(null);
-
-  const products = [
+  const [currentCollection, setCurrentCollection] = useState(0);
+  const productsPerPage = 9; // 3 rows * 3 columns
+  const allProducts = [
     { id: 1, title: "Product 1", price: "10", image: "images/handles.jpeg" },
     { id: 2, title: "Product 2", price: "20", image: "images/handles2.jpg" },
     { id: 3, title: "Product 3", price: "30", image: "images/ball.jpg" },
-    { id: 5, title: "Product 5", price: "50", image: "images/shoes.jpg" },
+    { id: 4, title: "Product 4", price: "40", image: "images/shoes.jpg" },
+    { id: 5, title: "Product 5", price: "50", image: "images/handles.jpeg" },
+    { id: 6, title: "Product 6", price: "60", image: "images/handles2.jpg" },
+    { id: 7, title: "Product 7", price: "70", image: "images/ball.jpg" },
+    { id: 8, title: "Product 8", price: "80", image: "images/shoes.jpg" },
+    { id: 9, title: "Product 9", price: "90", image: "images/handles.jpeg" },
+    { id: 10, title: "Product 10", price: "100", image: "images/handles2.jpg" },
+    { id: 11, title: "Product 11", price: "110", image: "images/ball.jpg" },
+    { id: 12, title: "Product 12", price: "120", image: "images/shoes.jpg" },
+    { id: 13, title: "Product 13", price: "130", image: "images/handles.jpeg" },
+    { id: 14, title: "Product 14", price: "140", image: "images/handles2.jpg" },
+    { id: 15, title: "Product 15", price: "150", image: "images/ball.jpg" },
   ];
+
+  const products = allProducts.slice(
+    currentCollection * productsPerPage,
+    (currentCollection + 1) * productsPerPage
+  );
 
   const [hoveredProduct, setHoveredProduct] = useState(null);
 
-  useEffect(() => {
-    const container = containerRef.current;
-
-    const handleScroll = () => {
-      const firstItem = container.firstChild;
-      const lastItem = container.lastChild;
-
-      if (container.scrollLeft <= 0) {
-        container.scrollLeft += lastItem.offsetWidth;
-        container.prepend(lastItem);
-      } else if (
-        container.scrollLeft + container.clientWidth >=
-        container.scrollWidth
-      ) {
-        container.scrollLeft -= firstItem.offsetWidth;
-        container.append(firstItem);
-      }
-    };
-
-    if (container) {
-      container.addEventListener("scroll", handleScroll);
-      return () => container.removeEventListener("scroll", handleScroll);
+  const handleNextCollection = () => {
+    if ((currentCollection + 1) * productsPerPage < allProducts.length) {
+      setCurrentCollection((prev) => prev + 1);
     }
-  }, []);
-
-  const handleDragStart = (e) => {
-    containerRef.current.isDragging = true;
-    containerRef.current.startX = e.pageX || e.touches[0].pageX;
   };
 
-  const handleDragMove = (e) => {
-    if (!containerRef.current.isDragging) return;
-
-    const currentX = e.pageX || e.touches[0].pageX;
-    const deltaX = containerRef.current.startX - currentX;
-    containerRef.current.scrollLeft += deltaX;
-    containerRef.current.startX = currentX;
-  };
-
-  const handleDragEnd = () => {
-    containerRef.current.isDragging = false;
+  const handlePrevCollection = () => {
+    if (currentCollection > 0) {
+      setCurrentCollection((prev) => prev - 1);
+    }
   };
 
   return (
@@ -82,49 +67,21 @@ const Shop = () => {
         Sprawdź produkty
       </Typography>
       <Box
-        ref={containerRef}
         sx={{
-          py: 8,
-          display: "flex",
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)", // 3 columns per row
           gap: 3,
-          overflowX: "scroll", // Make horizontal scrolling active
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          "&::-webkit-scrollbar": {
-            display: "none",
-          },
-          cursor: "grab",
-          userSelect: "none",
-          "@media (max-width: 600px)": {
-            flexWrap: "nowrap", // Make sure it's horizontally scrollable
-          },
+          paddingBottom: "2rem",
         }}
-        onMouseDown={handleDragStart}
-        onTouchStart={handleDragStart}
-        onMouseMove={handleDragMove}
-        onTouchMove={handleDragMove}
-        onMouseUp={handleDragEnd}
-        onMouseLeave={handleDragEnd}
-        onTouchEnd={handleDragEnd}
       >
         {products.map((product) => (
           <Box
             key={product.id}
             sx={{
-              flex: "0 0 100%", // Set to 100% to show one item at a time on mobile
-              maxWidth: "100%", // Keep it to 100% width for mobile
-              transition: "transform 0.3s ease, filter 0.3s ease",
-              filter: hoveredProduct && hoveredProduct !== product.id ? "blur(4px)" : "none",
-              overflow: "visible",
-              transformOrigin: "center",
-              "@media (min-width: 600px)": {
-                flex: "0 0 calc(33.333% - 1rem)", // 3 items per row on larger screens
-                maxWidth: "calc(33.333% - 1rem)",
-              },
+              transition: "transform 0.3s ease",
             }}
             onMouseEnter={() => setHoveredProduct(product.id)}
             onMouseLeave={() => setHoveredProduct(null)}
-            onClick={() => setHoveredProduct(product.id)}
           >
             <Card
               sx={{
@@ -136,7 +93,7 @@ const Shop = () => {
             >
               <CardMedia
                 component="img"
-                height="400" // Default height for desktop
+                height="200"
                 image={product.image}
                 alt={product.title}
                 sx={{
@@ -144,9 +101,6 @@ const Shop = () => {
                   opacity: hoveredProduct === product.id ? 0.3 : 1,
                   cursor: "pointer",
                   objectFit: "cover",
-                  "@media (max-width: 600px)": {
-                    height: "350px", // Increased height on mobile
-                  },
                 }}
               />
               {(hoveredProduct === product.id || hoveredProduct === null) && (
@@ -192,6 +146,34 @@ const Shop = () => {
             </Card>
           </Box>
         ))}
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
+        <Button
+          variant="contained"
+          onClick={handlePrevCollection}
+          disabled={currentCollection === 0}
+          sx={{
+            backgroundColor: "#333",
+            "&:hover": {
+              backgroundColor: "#555",
+            },
+          }}
+        >
+          Poprzednie
+        </Button>
+        <Button
+          variant="contained"
+          onClick={handleNextCollection}
+          disabled={(currentCollection + 1) * productsPerPage >= allProducts.length}
+          sx={{
+            backgroundColor: "#333",
+            "&:hover": {
+              backgroundColor: "#555",
+            },
+          }}
+        >
+          Następne
+        </Button>
       </Box>
     </Container>
   );
