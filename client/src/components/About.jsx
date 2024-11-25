@@ -10,11 +10,11 @@ const About = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible(true); // Element has come into view
+            setIsVisible(true);
           }
         });
       },
-      { threshold: 0.5 } // Trigger when 50% of the element is visible
+      { threshold: 0.5 }
     );
 
     if (aboutRef.current) {
@@ -33,37 +33,43 @@ const About = () => {
       ref={aboutRef}
       id="about"
       sx={{
-        paddingY: 4,
-        paddingTop: { xs: 2, sm: 4 },
-        paddingBottom: { xs: 2, sm: 6 }, // Add more space under the section on larger screens
-        display: "flex",
-        flexDirection: "column", // Flexbox layout
-        justifyContent: "center", // Vertically center content
-        alignItems: "center", // Horizontally center content
-        marginTop: { xs: 3, sm: 8 }, // Increase space above on larger screens
-        maxWidth: { xs: '100%', sm: '85%' }, // Wider container on larger screens
+        py: 8,
+        px: 6,
+        mt: { xs: 6, sm: 10 }, // Increased gap from the top header
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        backgroundColor: '#f9f9f9',
+        borderRadius: '20px',
+        boxShadow: '0 10px 25px rgba(0, 0, 0, 0.1)',
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(50px)',
+        transition: 'all 0.6s ease-in-out',
+        maxWidth: '85%',
+        mx: 'auto',
       }}
-      className={`fade-in ${isVisible ? 'visible' : ''}`}
     >
       <Grid
         container
-        spacing={4}
+        spacing={8} // Increased spacing between image and text
         alignItems="center"
         sx={{
-          width: '100%',
-          justifyContent: "center",
-          height: "auto", // Adjust height dynamically
+          justifyContent: 'center',
         }}
       >
-        {/* Left side: Image */}
+        {/* Left Side: Image */}
         <Grid item xs={12} md={6}>
           <Box
             sx={{
               width: '100%',
-              height: { xs: '40vh', sm: '60vh' }, // Adjust height based on screen size
+              height: { xs: '50vh', sm: '70vh' }, // Made the image larger
               overflow: 'hidden',
-              borderRadius: '16px',
-              boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+              borderRadius: '20px',
+              boxShadow: '0 6px 15px rgba(0, 0, 0, 0.2)',
+              transition: 'transform 0.3s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+              },
             }}
           >
             <img
@@ -73,21 +79,42 @@ const About = () => {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                borderRadius: '16px',
+                borderRadius: '20px',
               }}
             />
           </Box>
         </Grid>
 
-        {/* Right side: Text */}
+        {/* Right Side: Text */}
         <Grid item xs={12} md={6}>
-          <Typography variant="h3" gutterBottom sx={{ textAlign: "center" }}>
+          <Typography
+            variant="h2" // Made the title larger
+            gutterBottom
+            sx={{
+              textAlign: 'center',
+              fontWeight: 'bold',
+              background: 'linear-gradient(90deg, #ff7e5f, #feb47b)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              fontSize: '3rem',
+              mb: 4,
+            }}
+          >
             O mnie
           </Typography>
-          <Typography variant="body1" sx={{ fontSize: "1.2rem", textAlign: "center" }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mauris ligula, porttitor a dolor a, iaculis facilisis ipsum. Nullam ac dapibus mauris. Cras at ligula nec leo eleifend tempor. Ut gravida ut tortor in lacinia. Praesent ornare felis sit amet nulla convallis, quis blandit sem laoreet. Morbi aliquam iaculis gravida. Ut sollicitudin lacus vitae lectus imperdiet, in dapibus tortor interdum. Suspendisse imperdiet risus odio. Vivamus eros lectus, congue ut viverra id, iaculis eleifend turpis. Nullam libero leo, varius ac pulvinar eget, feugiat in est. Nunc et neque eget dolor rutrum aliquet non quis lacus. Morbi auctor a orci vitae pharetra.
-
-            Nulla porttitor erat vitae leo suscipit, et tincidunt odio venenatis. Curabitur finibus erat in nibh blandit, non scelerisque turpis tincidunt. Vivamus fermentum augue ante, fermentum placerat turpis interdum vel. Nulla vehicula ipsum non diam gravida, sed eleifend ipsum dictum. Phasellus euismod euismod elit dignissim vestibulum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aenean sit amet lorem eu elit vestibulum rhoncus. Aenean facilisis eros sit amet turpis facilisis, ac tempor mauris placerat. Vestibulum nec tincidunt risus. Etiam et eros nec magna pellentesque feugiat nec non turpis. Donec fermentum est in ex fringilla, eget vehicula odio efficitur.
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '1.4rem', // Increased font size
+              color: '#555',
+              lineHeight: 1.8,
+              textAlign: 'justify',
+              px: { xs: 2, sm: 0 },
+            }}
+          >
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean mauris ligula, porttitor a dolor a, 
+            iaculis facilisis ipsum. Nullam ac dapibus mauris. Cras at ligula nec leo eleifend tempor. Ut gravida 
+            ut tortor in lacinia. Praesent ornare felis sit amet nulla convallis, quis blandit sem laoreet.
           </Typography>
         </Grid>
       </Grid>
