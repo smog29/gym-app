@@ -5,7 +5,7 @@ const Testimonials = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [sliderValue, setSliderValue] = useState(100);
-  const intervalRef = useRef(null); // To store the interval ID
+  const intervalRef = useRef(null);
 
   const testimonials = [
     {
@@ -48,33 +48,29 @@ const Testimonials = () => {
   }, []);
 
   const resetTimer = () => {
-    // Clear the existing interval
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
     }
-    // Set a new interval to change the slide every 7 seconds
     intervalRef.current = setInterval(() => {
       setCurrentSlide((prevSlide) => (prevSlide + 1) % testimonials.length);
     }, 7000);
   };
 
   useEffect(() => {
-    resetTimer(); // Start the timer when the component mounts
-
-    // Cleanup the interval on component unmount
+    resetTimer();
     return () => clearInterval(intervalRef.current);
   }, []);
 
   const nextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % testimonials.length);
-    resetTimer(); // Reset the timer when moving to the next slide
+    resetTimer();
   };
 
   const prevSlide = () => {
     setCurrentSlide((prevSlide) =>
       prevSlide === 0 ? testimonials.length - 1 : prevSlide - 1
     );
-    resetTimer(); // Reset the timer when moving to the previous slide
+    resetTimer();
   };
 
   const handleSliderChange = (event) => {
@@ -85,25 +81,55 @@ const Testimonials = () => {
     <Container
       ref={testimonialsRef}
       id="testimonials"
-      sx={{ paddingY: 6, maxWidth: '1200px', margin: '0 auto' }}
+      sx={{
+        paddingY: 6,
+        maxWidth: '1200px',
+        margin: '0 auto',
+        '@media (max-width: 600px)': {
+          paddingY: 4,
+        },
+      }}
       className={`fade-in ${isVisible ? 'visible' : ''}`}
     >
-      <Typography variant="h3" gutterBottom sx={{ textAlign: 'center', fontWeight: 'bold', marginBottom: 4 }}>
+      <Typography
+        variant="h3"
+        gutterBottom
+        sx={{
+          textAlign: 'center',
+          fontWeight: 'bold',
+          marginBottom: 4,
+          fontSize: { xs: '2rem', sm: '2.5rem' },
+        }}
+      >
         Opinie
       </Typography>
 
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Card sx={{ display: 'flex', flexDirection: 'row', borderRadius: '15px', boxShadow: 4 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Card
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            borderRadius: '15px',
+            boxShadow: 4,
+            width: { xs: '100%', sm: '80%' },
+            maxWidth: '1200px',
+          }}
+        >
           <Box
             sx={{
-              width: '60%',
+              width: { xs: '100%', sm: '60%' },
               position: 'relative',
               overflow: 'hidden',
               borderRadius: '15px',
-              height: '500px',
-              padding: '10px', // Added padding to ensure the image doesn't touch the border
-              marginTop: '10px', // Added margin to create space at the top
-              marginBottom: '10px', // Added margin to create space at the bottom
+              height: { xs: '300px', sm: '500px' },
+              padding: '10px',
             }}
           >
             <Fade in={true} timeout={1000}>
@@ -116,11 +142,11 @@ const Testimonials = () => {
                   maxHeight: '500px',
                   width: '100%',
                   height: 'auto',
-                  objectFit: 'contain', // Ensure the image maintains aspect ratio and is fully visible
+                  objectFit: 'contain',
                   position: 'absolute',
                   top: 0,
                   left: 0,
-                  borderRadius: '15px', // Rounded corners
+                  borderRadius: '15px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
                 }}
               />
@@ -136,25 +162,36 @@ const Testimonials = () => {
                   maxHeight: '500px',
                   width: '100%',
                   height: 'auto',
-                  objectFit: 'contain', // Ensure the image maintains aspect ratio and is fully visible
+                  objectFit: 'contain',
                   position: 'absolute',
                   top: 0,
                   left: 0,
                   clipPath: `inset(0 ${sliderValue}% 0 0)`,
                   transition: 'clip-path 0.5s ease-in-out',
-                  borderRadius: '15px', // Rounded corners
+                  borderRadius: '15px',
                   boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
                 }}
               />
             </Fade>
           </Box>
 
-          <Box sx={{ width: '40%', padding: 4, display: 'flex', alignItems: 'center' }}>
+          <Box
+            sx={{
+              width: { xs: '100%', sm: '40%' },
+              padding: 4,
+              display: 'flex',
+              alignItems: 'center',
+            }}
+          >
             <CardContent>
               <Typography
                 variant="body1"
                 color="text.secondary"
-                sx={{ fontSize: '18px', textAlign: 'center', lineHeight: '1.8' }}
+                sx={{
+                  fontSize: { xs: '14px', sm: '18px' },
+                  textAlign: 'center',
+                  lineHeight: '1.8',
+                }}
               >
                 {testimonials[currentSlide].opinion}
               </Typography>
