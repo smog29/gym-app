@@ -168,16 +168,25 @@ const Testimonials = () => {
         <Button
           onClick={prevSlide}
           variant="contained"
-          color="primary"
-          sx={{ marginRight: 2, padding: '10px 20px', fontSize: '16px' }}
+          sx={{
+            marginRight: 2,
+            padding: '10px 20px',
+            fontSize: '16px',
+            backgroundColor: 'black', // Set background color to black
+            color: 'white', // Ensure the text color is white for contrast
+          }}
         >
           Poprzednia
         </Button>
         <Button
           onClick={nextSlide}
           variant="contained"
-          color="primary"
-          sx={{ padding: '10px 20px', fontSize: '16px' }}
+          sx={{
+            padding: '10px 20px',
+            fontSize: '16px',
+            backgroundColor: 'black', // Set background color to black
+            color: 'white', // Ensure the text color is white for contrast
+          }}
         >
           Następna
         </Button>
