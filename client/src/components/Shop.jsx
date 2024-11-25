@@ -4,7 +4,7 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 const Shop = () => {
   const [currentCollection, setCurrentCollection] = useState(0);
-  const productsPerPage = 9; // 3 rows * 3 columns
+  const productsPerPage = 9;
   const allProducts = [
     { id: 1, title: "Product 1", price: "10", image: "images/handles.jpeg" },
     { id: 2, title: "Product 2", price: "20", image: "images/handles2.jpg" },
@@ -69,7 +69,11 @@ const Shop = () => {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)", // 3 columns per row
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)", // 1 column on extra-small screens
+            sm: "repeat(2, 1fr)", // 2 columns on small screens
+            md: "repeat(3, 1fr)", // 3 columns on medium and larger screens
+          },
           gap: 3,
           paddingBottom: "2rem",
         }}
