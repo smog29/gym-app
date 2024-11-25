@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Container, Typography, Box, Card, CardContent, CardMedia, Button } from '@mui/material';
+import { Container, Typography, Box, Card, CardContent, CardMedia, Button, Fade } from '@mui/material';
 
 const Testimonials = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -101,37 +101,50 @@ const Testimonials = () => {
               overflow: 'hidden',
               borderRadius: '15px',
               height: '500px',
+              padding: '10px', // Added padding to ensure the image doesn't touch the border
             }}
           >
-            <CardMedia
-              component="img"
-              image={testimonials[currentSlide].after}
-              alt="After"
-              sx={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-              }}
-            />
+            <Fade in={true} timeout={1000}>
+              <CardMedia
+                component="img"
+                image={testimonials[currentSlide].after}
+                alt="After"
+                sx={{
+                  maxWidth: '100%',
+                  maxHeight: '500px',
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'contain', // Ensure the image maintains aspect ratio and is fully visible
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  borderRadius: '15px', // Rounded corners
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                }}
+              />
+            </Fade>
 
-            <CardMedia
-              component="img"
-              image={testimonials[currentSlide].before}
-              alt="Before"
-              sx={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                clipPath: `inset(0 ${sliderValue}% 0 0)`,
-                transition: 'clip-path 0.5s ease-in-out',
-              }}
-            />
+            <Fade in={true} timeout={1000}>
+              <CardMedia
+                component="img"
+                image={testimonials[currentSlide].before}
+                alt="Before"
+                sx={{
+                  maxWidth: '100%',
+                  maxHeight: '500px',
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'contain', // Ensure the image maintains aspect ratio and is fully visible
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  clipPath: `inset(0 ${sliderValue}% 0 0)`,
+                  transition: 'clip-path 0.5s ease-in-out',
+                  borderRadius: '15px', // Rounded corners
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                }}
+              />
+            </Fade>
           </Box>
 
           <Box sx={{ width: '40%', padding: 4, display: 'flex', alignItems: 'center' }}>
@@ -172,8 +185,8 @@ const Testimonials = () => {
             marginRight: 2,
             padding: '10px 20px',
             fontSize: '16px',
-            backgroundColor: 'black', // Set background color to black
-            color: 'white', // Ensure the text color is white for contrast
+            backgroundColor: 'black',
+            color: 'white',
           }}
         >
           Poprzednia
@@ -184,8 +197,8 @@ const Testimonials = () => {
           sx={{
             padding: '10px 20px',
             fontSize: '16px',
-            backgroundColor: 'black', // Set background color to black
-            color: 'white', // Ensure the text color is white for contrast
+            backgroundColor: 'black',
+            color: 'white',
           }}
         >
           Następna
