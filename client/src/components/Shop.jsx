@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Container, Typography, Box, Card, CardContent, CardMedia, Button } from "@mui/material";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
@@ -30,6 +30,8 @@ const Shop = () => {
 
   const [hoveredProduct, setHoveredProduct] = useState(null);
 
+  const buttonsWrapperRef = useRef(null);
+
   const handleNextCollection = () => {
     if ((currentCollection + 1) * productsPerPage < allProducts.length) {
       setCurrentCollection((prev) => prev + 1);
@@ -41,6 +43,17 @@ const Shop = () => {
       setCurrentCollection((prev) => prev - 1);
     }
   };
+
+  // Check if the total number of products is less than or equal to productsPerPage
+  const hasMoreThan9Products = allProducts.length > productsPerPage;
+
+  const hasLessThanFullPage = (currentCollection + 1) * productsPerPage >= allProducts.length;
+
+  useEffect(() => {
+    if (hasLessThanFullPage && buttonsWrapperRef.current) {
+      buttonsWrapperRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, [currentCollection, hasLessThanFullPage]);
 
   return (
     <Container
@@ -151,34 +164,41 @@ const Shop = () => {
           </Box>
         ))}
       </Box>
-      <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-        <Button
-          variant="contained"
-          onClick={handlePrevCollection}
-          disabled={currentCollection === 0}
-          sx={{
-            backgroundColor: "#333",
-            "&:hover": {
-              backgroundColor: "#555",
-            },
-          }}
+
+      {/* Show buttons only if there are more than 9 items */}
+      {hasMoreThan9Products && (
+        <Box
+          ref={buttonsWrapperRef} // Add ref to the wrapper
+          sx={{ display: "flex", justifyContent: "center", gap: 2 }}
         >
-          Poprzednie
-        </Button>
-        <Button
-          variant="contained"
-          onClick={handleNextCollection}
-          disabled={(currentCollection + 1) * productsPerPage >= allProducts.length}
-          sx={{
-            backgroundColor: "#333",
-            "&:hover": {
-              backgroundColor: "#555",
-            },
-          }}
-        >
-          Następne
-        </Button>
-      </Box>
+          <Button
+            variant="contained"
+            onClick={handlePrevCollection}
+            disabled={currentCollection === 0}
+            sx={{
+              backgroundColor: "#333",
+              "&:hover": {
+                backgroundColor: "#555",
+              },
+            }}
+          >
+            Poprzednie
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleNextCollection}
+            disabled={hasLessThanFullPage}
+            sx={{
+              backgroundColor: "#333",
+              "&:hover": {
+                backgroundColor: "#555",
+              },
+            }}
+          >
+            Następne
+          </Button>
+        </Box>
+      )}
     </Container>
   );
 };
