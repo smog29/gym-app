@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Container, Typography, Box, Button } from "@mui/material";
 
 const FAQ = () => {
@@ -69,7 +69,10 @@ const FAQ = () => {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "1fr 2fr",
+          gridTemplateColumns: {
+            xs: "1fr", // Single column on mobile
+            sm: "1fr 2fr", // 1 column for questions, 2 columns for answers on larger screens
+          },
           gap: 4,
           alignItems: "start",
         }}
@@ -87,7 +90,7 @@ const FAQ = () => {
                 backgroundColor: selectedQuestion === question.id ? "#4caf50" : "#f0f0f0",
                 color: selectedQuestion === question.id ? "#fff" : "#333",
                 fontWeight: "bold",
-                fontSize: "18px",
+                fontSize: { xs: "16px", sm: "18px" }, // Smaller font size on mobile
                 boxShadow:
                   selectedQuestion === question.id
                     ? "0 4px 12px rgba(76, 175, 80, 0.3)"
@@ -108,7 +111,7 @@ const FAQ = () => {
           sx={{
             backgroundColor: "#f7f7f7",
             borderRadius: "10px",
-            padding: "30px",
+            padding: { xs: "20px", sm: "30px" }, // Adjust padding on mobile
             boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
             transform: selectedQuestion ? "translateY(0)" : "translateY(20px)",
             opacity: selectedQuestion ? 1 : 0,
@@ -132,7 +135,11 @@ const FAQ = () => {
               </Typography>
               <Typography
                 variant="body1"
-                sx={{ fontSize: "18px", color: "#555", lineHeight: 1.8 }}
+                sx={{
+                  fontSize: { xs: "16px", sm: "18px" }, // Adjust font size on mobile
+                  color: "#555",
+                  lineHeight: 1.8,
+                }}
               >
                 {questions.find((q) => q.id === selectedQuestion).answer}
               </Typography>
