@@ -29,6 +29,9 @@ app.post(
     .withMessage('Hasło musi mieć co najmniej 8 znaków')
     .matches(/^[^A-Z]*[A-Z][^A-Z]*$/)  // Only one capital letter
     .withMessage('Hasło musi zawierać co najmniej jedną dużą literę'),
+  body('passwordConfirmation')
+    .custom((value, { req }) => value === req.body.password)
+    .withMessage('Hasła muszą się zgadzać'),
   async (req, res) => {
     // Check for validation errors
     const errors = validationResult(req);
@@ -58,7 +61,15 @@ app.post(
         },
       });
 
-      res.status(201).json(newUser);  // This line sends the response to the client
+      // Generate a JWT token that expires in 1 week
+      const token = jwt.sign(
+        { userId: newUser.id, email: newUser.email },
+        JWT_SECRET,
+        { expiresIn: '7d' }
+      );
+
+      // Respond with only the token
+      res.status(201).json({ message: 'Rejestracja zakończona sukcesem', token });
     } catch (error) {
       console.error(error);
       res.status(500).json({ errors: 'Nie udało się utworzyć użytkownika' });
