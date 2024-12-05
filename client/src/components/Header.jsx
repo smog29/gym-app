@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 import { AppBar, Toolbar, Button, Box, useMediaQuery } from '@mui/material';
 import { Home, Info, QuestionAnswer, ContactMail, Shop } from '@mui/icons-material';
 import DescriptionIcon from '@mui/icons-material/Description';
+import CalculateIcon from '@mui/icons-material/Calculate'; // Importing the icon for Kalkulator kcal
+import { useNavigate, useLocation } from 'react-router-dom'; // Import useNavigate and useLocation
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHeaderVisible, setIsHeaderVisible] = useState(true);
   const isMobile = useMediaQuery((theme) => theme.breakpoints.down('sm')); // Check for mobile screen size
+  const navigate = useNavigate(); // Hook to programmatically navigate
+  const location = useLocation(); // Hook to get the current location
 
   const handleScroll = () => {
     if (window.scrollY > 50) {
@@ -39,6 +43,28 @@ const Header = () => {
         top: offsetPosition,
         behavior: 'smooth',
       });
+    }
+  };
+
+  // Handle "Kalkulator kcal" button click
+  const handleKalkulatorClick = () => {
+    // If already on /calc page, just scroll to the calculator section
+    if (location.pathname === '/calc') {
+      handleSmoothScroll('calculator-section'); // Assuming there's a section with id="calculator-section" in the /calc page
+    } else {
+      navigate('/calc'); // Navigate to /calc page
+    }
+  };
+
+  // Handle navigation to the root and smooth scroll to the section
+  const handleRootNavigation = (id) => {
+    if (location.pathname === '/') {
+      // Scroll to the section without redirecting
+      handleSmoothScroll(id);
+    } else {
+      // Navigate to / and then scroll to the section
+      navigate('/');
+      setTimeout(() => handleSmoothScroll(id), 100); // Delay to allow navigation to complete
     }
   };
 
@@ -93,18 +119,58 @@ const Header = () => {
           justifyContent: isMobile ? 'center' : 'flex-end',
           paddingTop: isMobile ? 1 : 0,
         }}>
+          <Button
+            color="inherit"
+            startIcon={<CalculateIcon />}
+            onClick={handleKalkulatorClick}
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 1,
+              fontSize: isScrolled ? '0.8rem' : '1rem',
+              fontWeight: 'bold',
+              textTransform: 'uppercase',
+              letterSpacing: 1.2,
+              transition: 'all 0.3s ease',
+              width: isMobile ? '100%' : 'auto',
+              padding: isMobile ? '5px 0' : '10px 20px',
+              position: 'relative',
+              '&:hover': {
+                backgroundColor: 'rgba(255, 87, 34, 0.1)',
+                color: '#FF5722',
+                borderRadius: '5px',
+                transform: 'scale(1.05)',
+              },
+              '&:hover::after': {
+                content: '""',
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '120%',
+                height: '120%',
+                backgroundColor: 'white',
+                borderRadius: '50%',
+                zIndex: -1,
+                transition: 'all 0.3s ease',
+              },
+            }}
+          >
+            Kalkulator kcal
+          </Button>
+
           {Object.entries({
             'About': { text: 'O mnie', icon: <Info /> },
             'Shop': { text: 'Sklep', icon: <Shop /> },
             'FAQ': { text: 'FAQ', icon: <QuestionAnswer /> },
             'Testimonials': { text: 'Opinie', icon: <Home /> },
-            'Form': { text: 'Formularz', icon: <DescriptionIcon /> }, 
+            'Form': { text: 'Formularz', icon: <DescriptionIcon /> },
             'Contact': { text: 'Kontakt', icon: <ContactMail /> },
           }).map(([component, { text, icon }]) => (
             <Button
               key={component}
               color="inherit"
-              onClick={() => handleSmoothScroll(component.toLowerCase())} // Use smooth scroll function
+              onClick={() => handleRootNavigation(component.toLowerCase())} // Handle root navigation and scroll
               sx={{
                 display: 'inline-flex',
                 alignItems: 'center',
