@@ -1,18 +1,16 @@
-import { useState, useEffect } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import axios from 'axios'
+import './App.css';
 
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import About from './components/About';
 import Shop from './components/Shop';
 import Faq from './components/Faq';
-import Transformations from './components/Transformations'
+import Transformations from './components/Transformations';
 import Testimonials from './components/Testimonials';
 import Form from './components/Form';
 import Contact from './components/Contact';
+import Calculator from './components/Calculator'; // Import your new tab component
 
 const theme = createTheme({
   palette: {
@@ -31,17 +29,26 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Header />
-      <CssBaseline />
-      <About />
-      <Shop />
-      <Faq />
-      <Transformations />
-      <Testimonials />
-      <Form />
-      <Contact />
+      <Router>
+        <Header />
+        <CssBaseline />
+        <Routes>
+          <Route path="/" element={
+            <>
+              <About />
+              <Shop />
+              <Faq />
+              <Transformations />
+              <Testimonials />
+              <Form />
+              <Contact />
+            </>
+          } />
+          <Route path="/calc" element={<Calculator />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }
 
-export default App
+export default App;
