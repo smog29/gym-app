@@ -36,8 +36,8 @@ const Calculator = () => {
       }
 
       if (field === 'height') {
-        if (isNaN(parsedValue) || parsedValue <= 50 || parsedValue > 250) {
-          fieldErrors.height = 'Proszę podać poprawny wzrost (50-250 cm).';
+        if (isNaN(parsedValue) || parsedValue <= 50 || parsedValue > 300) {
+          fieldErrors.height = 'Proszę podać poprawny wzrost (50-300 cm).';
         }
       }
 
