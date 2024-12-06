@@ -61,7 +61,7 @@ const Transformations = () => {
               key={currentTransformation.beforeImage} // Key to trigger fade on image change
             >
               <img
-                src={currentTransformation.beforeImage}
+                src={`${import.meta.env.BASE_URL}${currentTransformation.beforeImage}`}
                 alt={`Before ${currentTransformation.name}`}
                 style={{
                   maxWidth: '100%',
@@ -90,7 +90,7 @@ const Transformations = () => {
               key={currentTransformation.afterImage} // Key to trigger fade on image change
             >
               <img
-                src={currentTransformation.afterImage}
+                src={`${import.meta.env.BASE_URL}${currentTransformation.afterImage}`}
                 alt={`After ${currentTransformation.name}`}
                 style={{
                   maxWidth: '100%',

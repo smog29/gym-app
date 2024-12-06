@@ -6,21 +6,21 @@ const Shop = () => {
   const [currentCollection, setCurrentCollection] = useState(0);
   const productsPerPage = 9;
   const allProducts = [
-    { id: 1, title: "Product 1", price: "10", image: "images/handles.jpeg" },
-    { id: 2, title: "Product 2", price: "20", image: "images/handles2.jpg" },
-    { id: 3, title: "Product 3", price: "30", image: "images/ball.jpg" },
-    { id: 4, title: "Product 4", price: "40", image: "images/shoes.jpg" },
-    { id: 5, title: "Product 5", price: "50", image: "images/handles.jpeg" },
-    { id: 6, title: "Product 6", price: "60", image: "images/handles2.jpg" },
-    { id: 7, title: "Product 7", price: "70", image: "images/ball.jpg" },
-    { id: 8, title: "Product 8", price: "80", image: "images/shoes.jpg" },
-    { id: 9, title: "Product 9", price: "90", image: "images/handles.jpeg" },
-    { id: 10, title: "Product 10", price: "100", image: "images/handles2.jpg" },
-    { id: 11, title: "Product 11", price: "110", image: "images/ball.jpg" },
-    { id: 12, title: "Product 12", price: "120", image: "images/shoes.jpg" },
-    { id: 13, title: "Product 13", price: "130", image: "images/handles.jpeg" },
-    { id: 14, title: "Product 14", price: "140", image: "images/handles2.jpg" },
-    { id: 15, title: "Product 15", price: "150", image: "images/ball.jpg" },
+    { id: 1, title: "Product 1", price: "10", image: "/images/handles.jpeg" },
+    { id: 2, title: "Product 2", price: "20", image: "/images/handles2.jpg" },
+    { id: 3, title: "Product 3", price: "30", image: "/images/ball.jpg" },
+    { id: 4, title: "Product 4", price: "40", image: "/images/shoes.jpg" },
+    { id: 5, title: "Product 5", price: "50", image: "/images/handles.jpeg" },
+    { id: 6, title: "Product 6", price: "60", image: "/images/handles2.jpg" },
+    { id: 7, title: "Product 7", price: "70", image: "/images/ball.jpg" },
+    { id: 8, title: "Product 8", price: "80", image: "/images/shoes.jpg" },
+    { id: 9, title: "Product 9", price: "90", image: "/images/handles.jpeg" },
+    { id: 10, title: "Product 10", price: "100", image: "/images/handles2.jpg" },
+    { id: 11, title: "Product 11", price: "110", image: "/images/ball.jpg" },
+    { id: 12, title: "Product 12", price: "120", image: "/images/shoes.jpg" },
+    { id: 13, title: "Product 13", price: "130", image: "/images/handles.jpeg" },
+    { id: 14, title: "Product 14", price: "140", image: "/images/handles2.jpg" },
+    { id: 15, title: "Product 15", price: "150", image: "/images/ball.jpg" },
   ];
 
   const products = allProducts.slice(
@@ -111,7 +111,7 @@ const Shop = () => {
               <CardMedia
                 component="img"
                 height="200"
-                image={product.image}
+                image={`${import.meta.env.BASE_URL}${product.image}`}
                 alt={product.title}
                 sx={{
                   transition: "opacity 0.3s ease",

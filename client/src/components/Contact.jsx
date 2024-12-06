@@ -113,7 +113,7 @@ const Contact = () => {
       {/* Right Section - Large Image */}
       <Box sx={{ flex: 1, maxWidth: '500px' }}>
         <img
-          src="images/contact.jpg"
+          src={`${import.meta.env.BASE_URL}/images/contact.jpg`}
           alt="Contact"
           style={{
             width: '100%',

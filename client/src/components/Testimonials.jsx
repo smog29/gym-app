@@ -10,14 +10,14 @@ const Testimonials = () => {
   const testimonials = [
     {
       id: 1,
-      before: 'images/before-marek.png',
-      after: 'images/after-marek.png',
+      before: '/images/before-marek.png',
+      after: '/images/after-marek.png',
       opinion: 'Kiedy zaczynałem moją przygodę z siłownią, nie wiedziałem, od czego zacząć... To było dla mnie ogromne wyzwanie, ale z pomocą trenerów i odpowiednim planem treningowym udało mi się osiągnąć niesamowite rezultaty...',
     },
     {
       id: 2,
-      before: 'images/before-ania.png',
-      after: 'images/after-ania.png',
+      before: '/images/before-ania.png',
+      after: '/images/after-ania.png',
       opinion: 'Zdecydowałam się na treningi w tym miejscu, ponieważ miałam dość typowego podejścia do fitnessu...',
     },
   ];
@@ -135,7 +135,7 @@ const Testimonials = () => {
             <Fade in={true} timeout={1000}>
               <CardMedia
                 component="img"
-                image={testimonials[currentSlide].after}
+                image={`${import.meta.env.BASE_URL}${testimonials[currentSlide].after}`}
                 alt="After"
                 sx={{
                   maxWidth: '100%',

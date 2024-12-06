@@ -73,7 +73,7 @@ const About = () => {
             }}
           >
             <img
-              src="/images/aboutme.jpeg"
+              src={`${import.meta.env.BASE_URL}/images/aboutme.jpeg`}
               alt="About me"
               style={{
                 width: '100%',
